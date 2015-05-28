@@ -1,6 +1,6 @@
-import {todoInjectables} from './TodoService';
+// import {todoInjectables} from './TodoService';
 
 
 export const appServicesInjectables = [
-  todoInjectables
+  // todoInjectables
 ];

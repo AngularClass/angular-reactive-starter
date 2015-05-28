@@ -25,7 +25,7 @@ import {TodoService} from '../services/TodoService';
   </form>
 
   <ul>
-    <li *ng-for="var todo of todoService.get('todos'); var $index = index">
+    <li *ng-for="var todo of todoService.observer | async; var $index = index">
       {{ todo.value }} <button (click)="removeTodo($event, $index)">[X]</button>
     </li>
   </ul>

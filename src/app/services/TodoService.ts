@@ -1,48 +1,61 @@
 import {bind, Inject} from 'angular2/di';
+import {Observable, EventEmitter} from 'angular2/src/facade/async';
+import {Map} from 'immutable';
 
 // Using TypeScript we can define our state interface
-interface ITodoState {
-  todos: Array<{
-    value: string,
-    created_at: Date
-  }>
-}
+// interface IObservable {
+//   next(val:any);
+//   return(val:any);
+//   throw(val:any);
+//   observer(generator: any): Observable;
+// }
+// interface ITodo {
+//   value: string;
+//   created_at: Date;
+//   completed?: boolean;
+// }
+// interface ITodoState {
+//   todos: Array<ITodo>
+// }
 
-// We can also make a TodoStore to manage cache/localStorage
-let _todoState:ITodoState = {
-  todos: [
-    {value:'finish example', created_at: new Date()},
-    {value:'add tests', created_at: new Date()}
-  ]
-};
+// // We can also make a TodoStore to manage cache/localStorage
+// let _todoState:ITodoState = {
+//   todos: [
+//     { value:'finish example', created_at: new Date() },
+//     { value:'add tests',      created_at: new Date() }
+//   ]
+// };
 
-// Our Todo Service
-export class TodoService {
-  private state: ITodoState; // we shouldn't access .state directly
-  constructor(@Inject('todoState') state) {
-    this.state = state;
-  }
+// // Our Todo Service
+// export class TodoService implements IObservable {
+//   private _state: ITodoState; // we shouldn't access .state directly
+//   private observer: Observable = new EventEmitter();
 
-  get(type) {
-    return (type) ? this.state[type] : this.state;
-  }
+//   constructor(@Inject('todoState') state) {
+//     this.observer
+//   }
 
-  add(todo) {
-    // Async call to server then save state
-    this.state.todos.push({
-      value: todo,
-      created_at: new Date()
-    });
-  }
+//   observer() { return this._observer; }
+//   next(value) { this._observer.next(value); }
+//   throw(error) { this._observer.throw(error); }
+//   return (value) { this._observer.return(value); }
 
-  remove(index) {
-    // Async call to server then save state
-    this.state.todos.splice(index, 1);
-  }
+//   add(todo) {
+//     // Async call to server then save state
+//     this.observer().next({
+//       value: todo,
+//       created_at: new Date()
+//     });
+//   }
 
-}//TodoService
+//   remove(index) {
+//     // Async call to server then save state
+//     this.observer().todos.splice(index, 1);
+//   }
 
-export const todoInjectables = [
-  bind('todoState').toValue(_todoState),
-  bind(TodoService).toClass(TodoService)
-];
+// }//TodoService
+
+// export const todoInjectables = [
+//   bind('todoState').toValue(_todoState),
+//   bind(TodoService).toClass(TodoService)
+// ];

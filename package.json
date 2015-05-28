@@ -1,5 +1,5 @@
 {
-  "name": "angular2-webpack-starter",
+  "name": "angular2-reactive-starter",
   "version": "0.0.0",
   "description": "An Angular 2 Webpack Starter kit featuring Angular 2, Router, TypeScript, and Webpack by AngularClass",
   "main": "",
@@ -12,16 +12,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gdi2290/angular2-webpack-seed.git"
+    "url": "https://github.com/gdi2290/angular2-reactive-seed.git"
   },
   "author": "gdi2290 <github@gdi2290.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gdi2290/angular2-webpack-seed/issues"
+    "url": "https://github.com/gdi2290/angular2-reactive-seed/issues"
   },
-  "homepage": "https://github.com/gdi2290/angular2-webpack-seed",
+  "homepage": "https://github.com/gdi2290/angular2-reactive-seed",
   "dependencies": {
     "angular2": "2.0.0-alpha.25",
+    "immutable": "^3.7.3",
     "raw-loader": "^0.5.1",
     "reflect-metadata": "^0.1.0",
     "rtts_assert": "2.0.0-alpha.25",

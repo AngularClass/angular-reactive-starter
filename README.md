@@ -1,6 +1,8 @@
 # Work in Progress
 ## Angular2 Reactive Starter [![Join the chat at https://gitter.im/angular-class/angular2-reactive-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-class/angular2-reactive-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Join the chat at https://gitter.im/angular-class/angular2-reactive-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-class/angular2-reactive-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ### Todo
 * everything
 

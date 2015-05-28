@@ -6,11 +6,12 @@ import {bootstrap} from 'angular2/angular2';
 
 // include any injectables
 import {routerInjectables} from 'angular2/router';
-import {shadowDomInjectables} from '../common/checkIfShadowDom';
+import {shadowDomInjectables} from '../common/shadowDomInjectables';
 
 // Our injectables Services
-import {appServicesInjectables} from './services/services';
+// import {appServicesInjectables} from './services/services';
 // Top level component to bootstrap
+import {modelInjectables} from './models/models';
 import {App} from './components/app';
 
 // bootstrap the Angular app with bindings
@@ -18,7 +19,8 @@ bootstrap(App, [
   // define any componentInjectableBindings
   routerInjectables,
   // if we want to use ShadowDom
-  shadowDomInjectables,
+  // shadowDomInjectables,
   // our servies
-  appServicesInjectables
+  // appServicesInjectables,
+  modelInjectables
 ]);

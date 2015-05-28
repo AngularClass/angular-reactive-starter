@@ -5,13 +5,27 @@ declare var global: any;
 declare var zone: any;
 declare var Zone: any;
 
+declare module 'angular2/src/services/url_resolver' {
+  class UrlResolver {}
+}
 
 declare module "angular2/src/facade/async" {
-  class Observable {}
-  class EventEmitter {
+  interface IObservable {
     next(val:any)
     return(val:any)
     throw(val:any)
+    observer(generator: any): Observable;
+  }
+
+  class Observable {
+    _subject: any;
+    observer(generator: any): IObservable;
+    next(val:any)
+    return(val:any)
+    throw(val:any)
+  }
+  class EventEmitter extends Observable {
+    _subject: any
   }
 }
 

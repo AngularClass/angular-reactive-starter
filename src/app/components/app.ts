@@ -2,62 +2,102 @@
 /// <reference path="../../custom_typings/ng2.d.ts" />
 
 // Angular 2
-import {Component, View, coreDirectives} from 'angular2/angular2';
-import {RouteConfig, RouterOutlet, RouterLink, Router} from 'angular2/router';
+import {Component, View, coreDirectives, onChange, ON_PUSH} from 'angular2/angular2';
+import {Observable} from 'angular2/src/facade/async';
+import {RouteConfig, Router, RouterOutlet, RouterLink} from 'angular2/router';
+var routerDirectives = [RouterOutlet, RouterLink];
 import {BrowserLocation} from 'angular2/src/router/browser_location';
-// We use a folder if we want separate files
-import {Home} from './home/home';
-// Otherwise we only use one file for a component
-import {Dashboard} from './dashboard';
+
 // A simple example of a Component using a Service
-import {Todo} from './todo';
+// import {Todo} from './todo';
 
 // Import all of our custom app directives
-import {appDirectives} from '../directives/directives';
+// import {appDirectives} from '../directives/directives';
+
+import {CounterIntent} from '../intents/CounterIntent';
+import {CounterModel} from '../models/CounterModel';
+
+
+@Component({
+  selector: 'count',
+  lifecycle: [onChange],
+  changeDetection: ON_PUSH,
+  properties: {
+    'counter': 'counter'
+  }
+})
+@View({
+  template: `
+    counter {{ counter }}
+    <button (click)="incrementCounter()">Increment Counter from Component</button>
+  `
+})
+export class Count {
+  counterIntent: CounterIntent;
+  constructor(counterIntent: CounterIntent) {
+    this.counterIntent = counterIntent;
+  }
+
+  onChange(wat) {
+    console.log('CHANGE', wat);
+  }
+  incrementCounter() {
+    this.counterIntent.incrementCounter();
+  }
+}
+
 
 // App: Top Level Component
 @Component({
-  selector: 'app' // without [ ] means we are selecting the tag directly,
+  selector: 'app', // without [ ] means we are selecting the tag directly,
+  lifecycle: [onChange]
+  // changeDetection: ON_PUSH
 })
 @View({
   // needed in order to tell Angular's compiler what's in the template
-  directives: [ RouterOutlet, RouterLink, coreDirectives, appDirectives ],
+  directives: [ routerDirectives, Count ],
   template: `
-  <style>
-    .title  { font-family: Arial, Helvetica, sans-serif; }
-    .nav    { display: inline; list-style-type: none; padding: 0;  background-color: #F8F8F8; }
-    .nav li { display: inline; }
-    main    { padding: 0.5em; }
-  </style>
 
   <h1 class="title">Hello {{ name }}</h1>
 
-  <ul class="nav">
-    <li><a router-link="home">Home</a></li>
-    |
-    <li><a router-link="dashboard">Dashboard</a></li>
-    |
-    <li><a router-link="todo">Todo</a></li>
-  </ul>
+
+  <count [counter]="state.counter"></count>
+  <button (click)="handleIncrement()">Increment Counter from App</button>
 
 
-  <main>
-    <router-outlet></router-outlet>
-  </main>
+
+  <pre>AppState = {{ model.subject | async | json }}</pre>
   `
 })
-@RouteConfig([
-  { path: '/',          as: 'home',      component: Home },
-  { path: '/dashboard', as: 'dashboard', component: Dashboard },
-  { path: '/todo',      as: 'todo',      component: Todo }
-])
 export class App {
   name: string;
-  constructor(router: Router, browserLocation: BrowserLocation) {
-    this.name = 'Angular 2';
+  state: Object;
+              model: CounterModel; counterIntent: CounterIntent;
+  constructor(model: CounterModel, counterIntent: CounterIntent) {
+               this.model = model; this.counterIntent = counterIntent;
 
-    // we need to manually go to the correct uri until the router is fixed
-    let uri = browserLocation.path();
-    router.navigate(uri);
+    this.name = 'Angular 2';
+    this.state = { counter: 0 };
+
+    this.model.subject.observer({ next: (state) => this.state = state });
+
+    // var AppObservable = Rx.Observable.combineLatest([
+    //     Counter.subject,
+    //     OtherModel.subject
+    //   ],
+    //   (Counter, OtherModel) => {
+    //     return { Counter, OtherModel
+    //     };
+    //   }
+    // );
+  }
+  handleIncrement() {
+    this.counterIntent.incrementCounter();
+  }
+  onChange(wat) {
+    console.log('CHANGE TOP', wat);
   }
 }
+
+
+

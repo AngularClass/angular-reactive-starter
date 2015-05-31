@@ -4,6 +4,7 @@
 // Angular 2
 import {Component, View, coreDirectives, onChange, ON_PUSH} from 'angular2/angular2';
 import {Observable} from 'angular2/src/facade/async';
+import {Inject} from 'angular2/di'
 import {RouteConfig, Router, RouterOutlet, RouterLink} from 'angular2/router';
 var routerDirectives = [RouterOutlet, RouterLink];
 import {BrowserLocation} from 'angular2/src/router/browser_location';
@@ -26,9 +27,7 @@ import {GreetModel} from '../models/GreetModel';
   selector: 'count',
   lifecycle: [onChange],
   changeDetection: ON_PUSH,
-  properties: {
-    'counter': 'counter'
-  }
+  properties: { 'counter': 'counter' }
 })
 @View({
   template: `
@@ -46,25 +45,27 @@ import {GreetModel} from '../models/GreetModel';
   `
 })
 export class Count {
-  counter: number;
+  counter: number = 0;
   counterIntent: CounterIntent;
   constructor(counterIntent: CounterIntent) {
     this.counterIntent = counterIntent;
+    // console.log('counter', this.counter)
+  }
+
+  incrementCounter() {
+    this.counterIntent.incrementCounter();
   }
 
   onChange(value) {
-    console.log('CHANGE Count\n', JSON.stringify(value, null, 2));
-  }
-  incrementCounter() {
-    this.counterIntent.incrementCounter();
+    console.log('CHANGE Count','\n', JSON.stringify(value, null, 2));
   }
 }
 
 
-// App: Top Level Component
+
 @Component({
-  selector: 'app', // without [ ] means we are selecting the tag directly,
-  lifecycle: [onChange]
+  selector: 'app',
+  lifecycle: [onChange],
   // changeDetection: ON_PUSH
 })
 @View({
@@ -74,56 +75,47 @@ export class Count {
 
   <h1 class="title">Hello Reactive Angular 2</h1>
 
+  <test-app></test-app>
 
-  <count [counter]="state.counter">
+
+  <count [counter]="appState | async | get('counter')">
     <button (click)="handleIncrement()">Increment Counter from App</button>
   </count>
 
-  <h2>Greet {{ state.greeting }}</h2>
+  <h2>Greet {{ appState | async | get('greeting') }}</h2>
   <div>
-    <button (^click)="toggleGreet()">Greet {{ state.greeting }} </button>
+    <button (^click)="toggleGreet()">Greet {{ appState | async | get('greeting') }} </button>
   </div>
-  <pre>state = {{ state | json }}</pre>
   <pre>appState = {{ appState | async | json }}</pre>
   `
 })
 export class App {
   state: any;
   appState: any;
-              // public isn't working for me here :/
-              counter: CounterModel; counterIntent: CounterIntent;
-                greet: GreetModel;     greetIntent: GreetIntent;
-  constructor(counter: CounterModel, counterIntent: CounterIntent,
-                greet: GreetModel,     greetIntent: GreetIntent) {
-          this.counter = counter;   this.counterIntent = counterIntent;
-            this.greet = greet;     this.greetIntent   = greetIntent;
+  constructor(
+    public counter: CounterModel,
+    public counterIntent: CounterIntent,
+    public greet: GreetModel,
+    public greetIntent: GreetIntent,
+    @Inject('initilAppState') initilAppState
+  ) {
 
-    this.state = {};
-
-    this.appState = Rx.Observable.merge(
-      this.counter.subject.toRx(),
-      this.greet.subject.toRx()
+    this.appState = Rx.Observable.return(initilAppState).combineLatest(
+      this.counter.subject,
+      this.greet.subject,
+      (...args) => Object.assign({}, ...args)
     );
-
-
-    this.appState.subscribe(results => {
-      this.state = Object.assign({}, this.state, results)
-    });
 
   }
   handleIncrement() {
-    console.log('CHANGE App');
     this.counterIntent.incrementCounter();
   }
   toggleGreet() {
-    console.log('CHANGE App');
     this.greetIntent.toggleGreet();
   }
-  // doesn't work at the moment
+
   onChange(value) {
-    console.log('CHANGE App\n', JSON.stringify(value, null, 2));
+    console.log('CHANGE App', '\n', JSON.stringify(value, null, 2));
   }
+
 }
-
-
-

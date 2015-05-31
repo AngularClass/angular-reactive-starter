@@ -24,8 +24,8 @@ export class CounterModel {
   public  subject: Observable = new EventEmitter();
   private _state: IState;
   constructor(
-    @Inject(CounterIntent) intent, @Inject('state') state) {
-    console.log('MODEL');
+    @Inject(CounterIntent) intent, @Inject('counterState') state) {
+    console.log('CounterMODEL');
     this._state  = state;
 
     var {
@@ -36,21 +36,20 @@ export class CounterModel {
       next: this.incrementCounter.bind(this)
     });
 
-    this.subject.next(this._state);
   }
 
   incrementCounter() {
     var counter = this._state.counter;
-    this._state = Object.assign({}, this._state, {
+    var state = Object.assign({}, this._state, {
       counter: counter + 1
     });
-
-    this.subject.next(this._state);
+    this._state = state;
+    this.subject.next(state);
   }
 }
 
 export var counterInjectables = [
-  bind('state').toValue(_initialState),
+  bind('counterState').toValue(_initialState),
   CounterIntent,
   CounterModel
 ];

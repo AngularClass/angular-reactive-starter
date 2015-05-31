@@ -25,6 +25,7 @@ module.exports = {
       'zone.js',
       // 'zone.js/dist/long-stack-trace-zone.js',
       'reflect-metadata',
+      'rx',
       'rtts_assert/rtts_assert',
 
       './src/common/BrowserDomAdapter',

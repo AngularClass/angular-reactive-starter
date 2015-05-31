@@ -7,6 +7,7 @@ import {bootstrap} from 'angular2/angular2';
 // include any injectables
 import {routerInjectables} from 'angular2/router';
 import {shadowDomInjectables} from '../common/shadowDomInjectables';
+import {rxPipeRegistry} from '../common/rxPipes';
 
 // Our injectables Services
 // import {appServicesInjectables} from './services/services';
@@ -22,5 +23,6 @@ bootstrap(App, [
   // shadowDomInjectables,
   // our servies
   // appServicesInjectables,
-  modelInjectables
+  modelInjectables,
+  rxPipeRegistry
 ]);

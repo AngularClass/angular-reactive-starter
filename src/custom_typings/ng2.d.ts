@@ -5,6 +5,32 @@ declare var global: any;
 declare var zone: any;
 declare var Zone: any;
 
+declare module "angular2/src/change_detection/pipes/pipe" {
+  class PipeFactory {}
+}
+
+declare module "angular2/src/change_detection/change_detection" {
+  var async: any;
+}
+
+declare module "angular2/change_detection" {
+  class Pipe {}
+  class PipeRegistry {
+    constructor(pipes: any)
+  }
+  var defaultPipes: any;
+}
+
+declare module "angular2/pipes" {
+  class ObservablePipe {
+    constructor(ref: any)
+    _subscription: any;
+    _observable: any;
+    _updateLatestValue(value: any): any;
+    _subscribe(obs: any): any;
+  }
+}
+
 declare module 'angular2/src/services/url_resolver' {
   class UrlResolver {}
 }

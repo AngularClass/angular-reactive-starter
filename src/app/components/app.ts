@@ -26,7 +26,7 @@ import {GreetModel} from '../models/GreetModel';
 @Component({
   selector: 'count',
   lifecycle: [onChange],
-  changeDetection: ON_PUSH,
+  // changeDetection: ON_PUSH,
   properties: { 'counter': 'counter' }
 })
 @View({
@@ -46,10 +46,7 @@ import {GreetModel} from '../models/GreetModel';
 })
 export class Count {
   counter: number = 0;
-  counterIntent: CounterIntent;
-  constructor(counterIntent: CounterIntent) {
-    this.counterIntent = counterIntent;
-    // console.log('counter', this.counter)
+  constructor(public counterIntent: CounterIntent) {
   }
 
   incrementCounter() {
@@ -75,9 +72,6 @@ export class Count {
 
   <h1 class="title">Hello Reactive Angular 2</h1>
 
-  <test-app></test-app>
-
-
   <count [counter]="appState | async | get('counter')">
     <button (click)="handleIncrement()">Increment Counter from App</button>
   </count>
@@ -90,19 +84,18 @@ export class Count {
   `
 })
 export class App {
-  state: any;
-  appState: any;
+  appState: Rx.Observable<Object>;
   constructor(
-    public counter: CounterModel,
+    counter: CounterModel,
     public counterIntent: CounterIntent,
-    public greet: GreetModel,
+    greet: GreetModel,
     public greetIntent: GreetIntent,
     @Inject('initilAppState') initilAppState
   ) {
 
     this.appState = Rx.Observable.return(initilAppState).combineLatest(
-      this.counter.subject,
-      this.greet.subject,
+      counter.subject,
+      greet.subject,
       (...args) => Object.assign({}, ...args)
     );
 

@@ -6,7 +6,7 @@ import {ObservablePipe} from 'angular2/pipes';
 import * as Rx from 'rx';
 
 export function isObservable(obs) {
-  return obs && obs.subscribe;
+  return obs && typeof obs.subscribe === 'function';
 }
 
 export class RxPipe extends ObservablePipe {

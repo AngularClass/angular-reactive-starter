@@ -7,6 +7,7 @@ import {Observable} from 'angular2/src/facade/async';
 import {RouteConfig, Router, RouterOutlet, RouterLink} from 'angular2/router';
 var routerDirectives = [RouterOutlet, RouterLink];
 import {BrowserLocation} from 'angular2/src/router/browser_location';
+import * as Rx from 'rx';
 
 // A simple example of a Component using a Service
 // import {Todo} from './todo';
@@ -16,6 +17,9 @@ import {BrowserLocation} from 'angular2/src/router/browser_location';
 
 import {CounterIntent} from '../intents/CounterIntent';
 import {CounterModel} from '../models/CounterModel';
+
+import {GreetIntent} from '../intents/GreetIntent';
+import {GreetModel} from '../models/GreetModel';
 
 
 @Component({
@@ -38,8 +42,8 @@ export class Count {
     this.counterIntent = counterIntent;
   }
 
-  onChange(wat) {
-    console.log('CHANGE', wat);
+  onChange(value) {
+    console.log('CHANGE Count', value);
   }
   incrementCounter() {
     this.counterIntent.incrementCounter();
@@ -55,47 +59,56 @@ export class Count {
 })
 @View({
   // needed in order to tell Angular's compiler what's in the template
-  directives: [ routerDirectives, Count ],
+  directives: [ routerDirectives, coreDirectives, Count ],
   template: `
 
-  <h1 class="title">Hello {{ name }}</h1>
+  <h1 class="title">{{ state.greeting }}</h1>
 
 
   <count [counter]="state.counter"></count>
   <button (click)="handleIncrement()">Increment Counter from App</button>
 
-
-
-  <pre>AppState = {{ model.subject | async | json }}</pre>
+  <h2>Greet {{ state.greeting }}</h2>
+  <div>
+    <button (^click)="toggleGreet()">Greet {{ state.greeting }} </button>
+  </div>
+  <pre>AppState = {{ state | json }}</pre>
   `
 })
 export class App {
-  name: string;
-  state: Object;
-              model: CounterModel; counterIntent: CounterIntent;
-  constructor(model: CounterModel, counterIntent: CounterIntent) {
-               this.model = model; this.counterIntent = counterIntent;
+  state: any;
+              // public isn't working for me here :/
+              counter: CounterModel; counterIntent: CounterIntent;
+                greet: GreetModel;     greetIntent: GreetIntent;
+  constructor(counter: CounterModel, counterIntent: CounterIntent,
+                greet: GreetModel,     greetIntent: GreetIntent) {
+          this.counter = counter;   this.counterIntent = counterIntent;
+            this.greet = greet;     this.greetIntent   = greetIntent;
 
-    this.name = 'Angular 2';
-    this.state = { counter: 0 };
+    this.state = {};
 
-    this.model.subject.observer({ next: (state) => this.state = state });
+    var appState = Rx.Observable.merge(
+      this.counter.subject.toRx(),
+      this.greet.subject.toRx()
+    );
 
-    // var AppObservable = Rx.Observable.combineLatest([
-    //     Counter.subject,
-    //     OtherModel.subject
-    //   ],
-    //   (Counter, OtherModel) => {
-    //     return { Counter, OtherModel
-    //     };
-    //   }
-    // );
+
+    appState.subscribe(results => {
+      this.state = Object.assign({}, this.state, results)
+    });
+
   }
   handleIncrement() {
+    console.log('CHANGE App');
     this.counterIntent.incrementCounter();
   }
-  onChange(wat) {
-    console.log('CHANGE TOP', wat);
+  toggleGreet() {
+    console.log('CHANGE App');
+    this.greetIntent.toggleGreet();
+  }
+  // doesn't work at the moment
+  onChange(value) {
+    console.log('CHANGE App', value);
   }
 }
 

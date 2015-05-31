@@ -1,6 +1,6 @@
 import {PipeFactory} from 'angular2/src/change_detection/pipes/pipe';
 import {async} from 'angular2/src/change_detection/change_detection';
-import {Pipe, PipeRegistry, defaultPipes} from 'angular2/change_detection';
+import {NullPipeFactory, Pipe, PipeRegistry, defaultPipes} from 'angular2/change_detection';
 import {bind} from 'angular2/di';
 import {ObservablePipe} from 'angular2/pipes';
 import * as Rx from 'rx';
@@ -21,21 +21,40 @@ export class RxPipe extends ObservablePipe {
       e => { throw e; }
     );
   }
-
 }
 
 export class RxPipeFactory extends PipeFactory {
   constructor() { super(); }
-
   supports(obs) { return isObservable(obs); }
-
   create(cdRef): Pipe { return new RxPipe(cdRef); }
 }
 
 export var rxAsync = [ new RxPipeFactory() ].concat(async);
 
+export class GetPipe extends Pipe {
+  onDestroy() {}
+  supports(val) { return true }
+  transform(val) {
+    // console.log('wat1', val)
+    return function(prop) {
+      // console.log('wat2', val, prop);
+      return (val) ? val[prop] : val;
+    }
+  }
+}
+
+export class GetPipeFactory extends PipeFactory {
+  constructor() { super(); }
+  supports(val) { return true }
+  create(ref: any): Pipe { return new GetPipe(); }
+}
+
+export var get = [ new GetPipeFactory(), new NullPipeFactory() ];
+
+
 export var rxPipes = Object.assign({}, defaultPipes, {
-  'async': rxAsync
+  'async': rxAsync,
+  'get': get
 });
 
 export var rxPipeRegistry = [

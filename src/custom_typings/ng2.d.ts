@@ -23,9 +23,11 @@ declare module "angular2/src/facade/async" {
     next(val:any)
     return(val:any)
     throw(val:any)
+    toRx(): any
   }
   class EventEmitter extends Observable {
     _subject: any
+    toRx(): any
   }
 }
 

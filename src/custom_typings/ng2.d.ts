@@ -5,6 +5,10 @@ declare var global: any;
 declare var zone: any;
 declare var Zone: any;
 
+interface ObjectConstructor {
+    assign(target: any, ...sources: any[]): any;
+}
+
 declare module "angular2/src/change_detection/pipes/pipe" {
   class PipeFactory {}
 }
@@ -15,9 +19,13 @@ declare module "angular2/src/change_detection/change_detection" {
 
 declare module "angular2/change_detection" {
   class Pipe {}
+  class NullPipeFactory {}
   class PipeRegistry {
     constructor(pipes: any)
   }
+  class JitChangeDetection {}
+  class ChangeDetection {}
+  class DynamicChangeDetection {}
   var defaultPipes: any;
 }
 

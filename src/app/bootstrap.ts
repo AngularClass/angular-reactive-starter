@@ -3,6 +3,8 @@
 
 // Angular 2
 import {bootstrap} from 'angular2/angular2';
+import {bind} from 'angular2/di';
+import {ChangeDetection, JitChangeDetection} from 'angular2/change_detection'
 
 // include any injectables
 import {routerInjectables} from 'angular2/router';
@@ -24,5 +26,6 @@ bootstrap(App, [
   // our servies
   // appServicesInjectables,
   modelInjectables,
-  rxPipeRegistry
+  rxPipeRegistry,
+  bind(ChangeDetection).toClass(JitChangeDetection)
 ]);

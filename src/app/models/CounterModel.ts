@@ -1,7 +1,6 @@
 // import {Observable, EventEmitter} from 'angular2/src/facade/async';
 import {bind, Inject, Injectable} from 'angular2/di';
 import * as Rx from 'rx';
-var {Observable, ReplaySubject} = Rx;
 
 import {CounterIntent} from '../intents/CounterIntent';
 
@@ -16,14 +15,16 @@ var _initialState:IState = {
 
 @Injectable()
 export class CounterModel {
-  public  subject: any = new ReplaySubject(1);
+  subject: Rx.BehaviorSubject<IState>;
   private _state: IState;
   constructor(
     @Inject(CounterIntent) intent,
     @Inject('counterState') state) {
+    this._state = state;
+
+    this.subject = new Rx.BehaviorSubject(this._state);
 
     console.log('CounterMODEL');
-    this._state = state;
 
     var {incrementCounterSubject} = intent.subjects;
 
@@ -31,7 +32,6 @@ export class CounterModel {
       next: this.incrementCounter.bind(this)
     });
 
-    this.subject.onNext(state);
   }
 
   incrementCounter() {

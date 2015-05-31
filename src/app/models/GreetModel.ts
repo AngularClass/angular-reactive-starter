@@ -1,7 +1,6 @@
 // import {Observable, EventEmitter} from 'angular2/src/facade/async';
 import {bind, Inject, Injectable} from 'angular2/di';
 import * as Rx from 'rx';
-var {Observable, ReplaySubject} = Rx;
 
 
 import {GreetIntent} from '../intents/GreetIntent';
@@ -19,14 +18,16 @@ var _initialState:IState = {
 
 @Injectable()
 export class GreetModel {
-  public  subject: any = new ReplaySubject(1);
+  subject: Rx.BehaviorSubject<IState>;
   private _state: IState;
   constructor(
     @Inject(GreetIntent) intent,
     @Inject('greetState') state) {
+    this._state  = state;
+
+    this.subject = new Rx.BehaviorSubject(this._state);
 
     console.log('GreetMODEL');
-    this._state  = state;
 
     var {toggleGreetSubject} = intent.subjects;
 
@@ -34,8 +35,6 @@ export class GreetModel {
       next: this.toggleGreet.bind(this)
     });
 
-
-    this.subject.onNext(this._state);
   }
 
   toggleGreet(subject) {

@@ -19,7 +19,9 @@ export class CounterModel {
   public  subject: any = new ReplaySubject(1);
   private _state: IState;
   constructor(
-    @Inject(CounterIntent) intent, @Inject('counterState') state) {
+    @Inject(CounterIntent) intent,
+    @Inject('counterState') state) {
+
     console.log('CounterMODEL');
     this._state = state;
 

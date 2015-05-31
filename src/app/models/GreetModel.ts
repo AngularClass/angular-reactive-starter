@@ -22,7 +22,9 @@ export class GreetModel {
   public  subject: any = new ReplaySubject(1);
   private _state: IState;
   constructor(
-    @Inject(GreetIntent) intent, @Inject('greetState') state) {
+    @Inject(GreetIntent) intent,
+    @Inject('greetState') state) {
+
     console.log('GreetMODEL');
     this._state  = state;
 

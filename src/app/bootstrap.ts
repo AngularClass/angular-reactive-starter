@@ -19,6 +19,7 @@ import {App} from './components/app';
 
 // bootstrap the Angular app with bindings
 bootstrap(App, [
+  bind('initilAppState').toValue({}), // initial state that could be server rendered
   // define any componentInjectableBindings
   routerInjectables,
   // if we want to use ShadowDom

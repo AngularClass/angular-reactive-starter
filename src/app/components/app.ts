@@ -32,18 +32,28 @@ import {GreetModel} from '../models/GreetModel';
 })
 @View({
   template: `
+  <div>
     counter {{ counter }}
-    <button (click)="incrementCounter()">Increment Counter from Component</button>
+
+    <div>
+      <button (click)="incrementCounter()">
+        Increment Counter from Component
+      </button>
+      <content></content>
+    </div>
+
+  </div>
   `
 })
 export class Count {
+  counter: number;
   counterIntent: CounterIntent;
   constructor(counterIntent: CounterIntent) {
     this.counterIntent = counterIntent;
   }
 
   onChange(value) {
-    console.log('CHANGE Count', value);
+    console.log('CHANGE Count\n', JSON.stringify(value, null, 2));
   }
   incrementCounter() {
     this.counterIntent.incrementCounter();
@@ -62,21 +72,24 @@ export class Count {
   directives: [ routerDirectives, coreDirectives, Count ],
   template: `
 
-  <h1 class="title">{{ state.greeting }}</h1>
+  <h1 class="title">Hello Reactive Angular 2</h1>
 
 
-  <count [counter]="state.counter"></count>
-  <button (click)="handleIncrement()">Increment Counter from App</button>
+  <count [counter]="state.counter">
+    <button (click)="handleIncrement()">Increment Counter from App</button>
+  </count>
 
   <h2>Greet {{ state.greeting }}</h2>
   <div>
     <button (^click)="toggleGreet()">Greet {{ state.greeting }} </button>
   </div>
-  <pre>AppState = {{ state | json }}</pre>
+  <pre>state = {{ state | json }}</pre>
+  <pre>appState = {{ appState | async | json }}</pre>
   `
 })
 export class App {
   state: any;
+  appState: any;
               // public isn't working for me here :/
               counter: CounterModel; counterIntent: CounterIntent;
                 greet: GreetModel;     greetIntent: GreetIntent;
@@ -87,13 +100,13 @@ export class App {
 
     this.state = {};
 
-    var appState = Rx.Observable.merge(
+    this.appState = Rx.Observable.merge(
       this.counter.subject.toRx(),
       this.greet.subject.toRx()
     );
 
 
-    appState.subscribe(results => {
+    this.appState.subscribe(results => {
       this.state = Object.assign({}, this.state, results)
     });
 
@@ -108,7 +121,7 @@ export class App {
   }
   // doesn't work at the moment
   onChange(value) {
-    console.log('CHANGE App', value);
+    console.log('CHANGE App\n', JSON.stringify(value, null, 2));
   }
 }
 

@@ -8,7 +8,11 @@ declare var Zone: any;
 interface ObjectConstructor {
     assign(target: any, ...sources: any[]): any;
 }
-
+declare module "angular2/src/core/zone/ng_zone" {
+  class NgZone {
+    runOutsideAngular(func: Function): any
+  }
+}
 declare module "angular2/src/change_detection/pipes/pipe" {
   class PipeFactory {}
 }

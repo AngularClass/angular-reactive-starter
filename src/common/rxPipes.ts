@@ -35,9 +35,7 @@ export class GetPipe extends Pipe {
   onDestroy() {}
   supports(val) { return true }
   transform(val) {
-    // console.log('wat1', val)
-    return function(prop) {
-      // console.log('wat2', val, prop);
+    return function getProp(prop) {
       return (val) ? val[prop] : val;
     }
   }

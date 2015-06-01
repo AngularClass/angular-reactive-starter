@@ -28,5 +28,5 @@ bootstrap(App, [
   // appServicesInjectables,
   modelInjectables,
   rxPipeRegistry,
-  bind(ChangeDetection).toClass(JitChangeDetection)
+  // bind(ChangeDetection).toClass(JitChangeDetection)
 ]);

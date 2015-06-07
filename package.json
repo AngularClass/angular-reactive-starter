@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/gdi2290/angular2-reactive-seed",
   "dependencies": {
-    "angular2": "2.0.0-alpha.25",
+    "angular2": "2.0.0-alpha.26",
     "immutable": "^3.7.3",
     "raw-loader": "^0.5.1",
     "reflect-metadata": "^0.1.0",
-    "rtts_assert": "2.0.0-alpha.25",
+    "rtts_assert": "2.0.0-alpha.26",
     "zone.js": "^0.5.0"
   },
   "devDependencies": {

@@ -91,7 +91,7 @@ export class DragElement {
   selector: 'count',
   // lifecycle: [onChange],
   // changeDetection: ON_PUSH,
-  properties: { 'counter': 'counter' }
+  properties: ['counter']
 })
 @View({
   directives: [ ],

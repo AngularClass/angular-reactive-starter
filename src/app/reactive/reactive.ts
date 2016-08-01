@@ -6,22 +6,17 @@ import { AppStore } from '../app-store';
 
 //normal component with @Output event
 @Component({
-  selector: 'incrementer',
   template: `
   <div>
     <button (click)="increments.emit(1)">increment</button>
   </div>`
 })
-class Incrementer {
+export class Incrementer {
   @Output() increments = new EventEmitter();
 }
 
 
 @Component({
-  selector: 'angularclass-app',
-  directives: [
-    Incrementer
-  ],
   template: `
     <div>
       <h4>Child Total Count: {{ appStore.changes.pluck('counter') | async }}</h4>
@@ -53,10 +48,6 @@ export class AngularclassApp {
 }
 
 @Component({
-  selector: 'ac-app',
-  directives: [
-    AngularclassApp
-  ],
   template: `
     <div>
       <h3>Parent Total Count: {{ counter }}</h3>
@@ -70,48 +61,28 @@ export class AcApp {
   // we can abuse everything to get what we want
   @Output() @ObserveViewChild(AngularclassApp) counterChange = new EventEmitter();
 
-  ngOnInit() {
-
-  }
 
 }
 
 @Component({
-  selector: 'app',
-  directives: [AcApp],
   template: `
     <div>
       <h2>Root Total Count: {{ counter }}</h2>
-      <ac-app (counterChange)="counter = $event"></ac-app>
+      <ac-app (counterChange)="$event"></ac-app>
     </div>
   `
 })
-export class App {
+export class ReactiveApp {
   get counter() {
     return this.appStore.getValue('counter');
   }
+
   @ObserveViewChild(AcApp) counterChange = new EventEmitter();
+
   constructor(public appStore: AppStore) {
 
 
     this.counterChange.subscribe(data => this.appStore.setValue('counter', data));
   }
-  ngOnInit() {
-  }
-
-}
-
-@Component({
-  directives: [
-    App
-  ],
-  template: `
-    <div>
-      Reactive
-      <app></app>
-    </div>
-  `
-})
-export class Reactive {
 
 }

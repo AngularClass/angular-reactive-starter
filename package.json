@@ -1,6 +1,6 @@
 {
   "name": "angular2-reactive-starter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An Angular 2 Reactive Starter kit featuring Angular 2 and Webpack 2",
   "author": "PatrickJS <github@gdi2290.com>",
   "main": "index.js",

@@ -37,7 +37,7 @@
     "@angularclass/resolve-angular-routes": "^1.0.3",
     "@types/core-js": "^0.9.28",
     "@types/node": "^4.0.30",
-    "awesome-typescript-loader": "^2.0.1",
+    "awesome-typescript-loader": "^2.1.1",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
     "ignore-loader": "^0.1.1",

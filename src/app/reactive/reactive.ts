@@ -2,6 +2,8 @@ import { Component, ViewChild, Output, Input, EventEmitter } from '@angular/core
 import { ObserveViewChild }  from '@angularclass/observe-decorators';
 import { Observable } from 'rxjs/Rx'
 
+import { AppStore } from '../app-store';
+
 //normal component with @Output event
 @Component({
   selector: 'incrementer',
@@ -22,7 +24,7 @@ class Incrementer {
   ],
   template: `
     <div>
-      <h4>Child Total Count: {{ counterChange | async }}</h4>
+      <h4>Child Total Count: {{ appStore.changes.pluck('counter') | async }}</h4>
       <incrementer></incrementer>
       <button #decrement>decrement</button>
     </div>
@@ -43,6 +45,10 @@ export class AngularclassApp {
   )
   .startWith(0)
   .scan((total: number, value: number) => total + value, 0);
+
+  constructor(public appStore: AppStore) {
+
+  }
 
 }
 
@@ -81,10 +87,16 @@ export class AcApp {
   `
 })
 export class App {
-  counter = 0;
-  // who needs |async
+  get counter() {
+    return this.appStore.getValue('counter');
+  }
+  @ObserveViewChild(AcApp) counterChange = new EventEmitter();
+  constructor(public appStore: AppStore) {
+
+
+    this.counterChange.subscribe(data => this.appStore.setValue('counter', data));
+  }
   ngOnInit() {
-    // where are all of my subscribes? ;)
   }
 
 }

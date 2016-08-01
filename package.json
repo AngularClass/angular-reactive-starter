@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@angularclass/conventions-loader": "^1.0.7",
-    "@angularclass/observe-decorators": "^1.1.0",
+    "@angularclass/observe-decorators": "^1.1.1",
     "@angularclass/resolve-angular-routes": "^1.0.3",
     "@types/core-js": "^0.9.28",
     "@types/node": "^4.0.30",

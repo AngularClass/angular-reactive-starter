@@ -1,23 +1,30 @@
 {
-  "version": "1.5.0",
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
-    "declaration": false,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": false,
+    "noEmitHelpers": true,
+    "pretty": true,
     "sourceMap": true,
-    "listFiles": true,
-    "outDir": "dist"
+    "lib": ["es5", "dom"],
+    "strictNullChecks": false,
+    "baseUrl": "./src",
+    "paths": [
+    ],
+    "types": [
+      "core-js",
+      "node"
+    ]
   },
-  "files": [
-    "node_modules/typescript/bin/lib.es6.d.ts",
-    "node_modules/immutable/dist/immutable.d.ts",
-    "src/custom_typings/ng2.d.ts",
-    "typings/tsd.d.ts",
-    "src/components/app.ts",
-    "src/bootstrap.ts"
-  ]
+  "exclude": [
+    "node_modules"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true,
+    "forkChecker": true
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": { "rewriteTsconfig": false }
 }

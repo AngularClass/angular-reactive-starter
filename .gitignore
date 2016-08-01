@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+npm-debug.log*
 
 # Runtime data
 pids
@@ -16,24 +17,21 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+# node-waf configuration
+.lock-wscript
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
-# Users Environment Variables
-.lock-wscript
-
-# OS generated files #
-.DS_Store
-ehthumbs.db
-Icon?
-Thumbs.db
-
-# Node Files #
+# Dependency directory
 node_modules
-bower_components
 
-# Dist       #
-dist
-public/__build__/**
-.webpack.json
+# Optional npm cache directory
+.npm
 
+# Optional REPL history
+.node_repl_history
+
+/typings/
+
+/dist

@@ -1,46 +1,67 @@
 {
   "name": "angular2-reactive-starter",
   "version": "0.0.0",
-  "description": "An Angular 2 Webpack Starter kit featuring Angular 2, Router, TypeScript, and Webpack by AngularClass",
-  "main": "",
+  "description": "An Angular 2 Reactive Starter kit featuring Angular 2 and Webpack 2",
+  "author": "PatrickJS <github@gdi2290.com>",
+  "main": "index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "build": "webpack -d",
-    "watch": "webpack -d --watch",
-    "server": "webpack-dev-server -d --inline --colors --display-error-details --display-cached ",
-    "start": "npm install && npm run server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run server:dev",
+    "start:hmr": "npm run server:dev -- --env.HMR",
+    "server:dev": "node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.ENV development",
+    "prebuild": "rm -rf dist",
+    "debug:build": "node-nightly --inspect --debug-brk node_modules/webpack/bin/webpack.js --env.ENV development",
+    "build": "node_modules/webpack/bin/webpack.js --env.ENV development"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gdi2290/angular2-reactive-seed.git"
-  },
-  "author": "gdi2290 <github@gdi2290.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gdi2290/angular2-reactive-seed/issues"
-  },
-  "homepage": "https://github.com/gdi2290/angular2-reactive-seed",
   "dependencies": {
-    "angular2": "2.0.0-alpha.26",
-    "immutable": "^3.7.3",
-    "raw-loader": "^0.5.1",
-    "reflect-metadata": "^0.1.0",
-    "rtts_assert": "2.0.0-alpha.26",
-    "zone.js": "^0.5.0"
+    "@angular/common": "2.0.0-rc.4",
+    "@angular/compiler": "2.0.0-rc.4",
+    "@angular/core": "2.0.0-rc.4",
+    "@angular/http": "2.0.0-rc.4",
+    "@angular/forms": "^0.2.0",
+    "@angular/router": "3.0.0-beta.2",
+    "@angular/platform-browser": "2.0.0-rc.4",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.4",
+    "@angular/platform-server": "2.0.0-rc.4",
+    "core-js": "^2.2.0",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12"
   },
   "devDependencies": {
-    "css-loader": "^0.12.1",
-    "exports-loader": "^0.6.2",
-    "expose-loader": "^0.6.0",
-    "file-loader": "^0.8.1",
-    "html-webpack-plugin": "^1.4.0",
-    "imports-loader": "^0.6.3",
-    "json-loader": "^0.5.1",
-    "style-loader": "^0.12.2",
-    "typescript": "^1.5.0-beta",
-    "typescript-simple-loader": "^0.1.2",
-    "url-loader": "^0.5.5",
-    "webpack": "^1.9.6",
-    "webpack-dev-server": "^1.8.2"
+    "@angularclass/conventions-loader": "^1.0.7",
+    "@angularclass/observe-decorators": "^1.1.0",
+    "@angularclass/resolve-angular-routes": "^1.0.3",
+    "@types/core-js": "^0.9.28",
+    "@types/node": "^4.0.30",
+    "awesome-typescript-loader": "^2.0.1",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.35.0",
+    "ignore-loader": "^0.1.1",
+    "json-loader": "^0.5.4",
+    "raw-loader": "^0.5.1",
+    "reflect-metadata": "0.1.3",
+    "string-replace-loader": "github:gdi2290/string-replace-loader",
+    "to-string-loader": "^1.1.4",
+    "ts-helpers": "github:gdi2290/ts-helpers",
+    "ts-loader": "^0.8.2",
+    "ts-node": "^1.2.2",
+    "tslint": "^3.14.0-dev.1",
+    "typescript": "^2.1.0-dev.20160801",
+    "webpack": "^2.1.0-beta.20",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^2.1.0-beta.0"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/gdi2290/angular2-webpack2-starter/issues"
+  },
+  "homepage": "https://github.com/gdi2290/angular2-webpack2-starter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gdi2290/angular2-webpack2-starter.git"
   }
 }

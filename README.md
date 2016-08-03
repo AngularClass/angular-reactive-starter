@@ -6,7 +6,7 @@
 
 ___
 
-# Angular2 Reactive Starter [![Join the chat at https://gitter.im/angular-class/angular2-reactive-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-class/angular2-reactive-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Angular 2 Reactive Starter 
 
 
 ### Quick start
@@ -16,10 +16,10 @@ ___
 ```bash
 # clone our repo
 # --depth 1 removes all but one .git commit history
-git clone --depth 1 https://github.com/angularclass/angular2-webpack-starter.git
+git clone --depth 1 https://github.com/AngularClass/angular2-reactive-starter.git
 
 # change directory to our repo
-cd angular2-webpack-starter
+cd angular2-reactive-starter
 
 # install the repo with npm
 npm install
@@ -28,7 +28,7 @@ npm install
 npm start
 
 # use Hot Module Replacement
-npm run server:dev:hmr
+npm run start:hmr
 
 # if you're in China use cnpm
 # https://github.com/cnpm/cnpm

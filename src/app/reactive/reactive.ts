@@ -68,7 +68,7 @@ export class AcApp {
   template: `
     <div>
       <h2>Root Total Count: {{ counter }}</h2>
-      <ac-app (counterChange)="$event"></ac-app>
+      <ac-app></ac-app>
     </div>
   `
 })
